@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz - História do Acre</title>
+  <meta name="theme-color" content="#2196f3">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f0f0f0; }
+    header { background: #2196f3; color: white; padding: 15px; text-align: center; }
+    main { max-width: 800px; margin: auto; padding: 20px; }
+    .tabs { display: flex; justify-content: center; margin-bottom: 20px; }
+    .tabs button { flex: 1; padding: 10px; border: none; background: #ddd; cursor: pointer; }
+    .tabs button.active { background: #2196f3; color: white; }
+    .section { display: none; }
+    .section.active { display: block; }
+    .quiz-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+    .question { margin-bottom: 15px; }
+    .options button { display: block; margin: 5px 0; width: 100%; padding: 10px; border: none; border-radius: 5px; background: #ddd; cursor: pointer; }
+    .options button.correct { background: #4caf50; color: white; }
+    .options button.wrong { background: #e74c3c; color: white; }
+    .next-btn { display: none; margin-top: 15px; padding: 10px 20px; background: #2196f3; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    .editor { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+    .editor input, .editor textarea { display: block; margin: 10px 0; padding: 8px; width: 100%; }
+    .editor button { margin-top: 10px; padding: 10px; border: none; border-radius: 5px; background: #4caf50; color: white; cursor: pointer; }
+    .lesson-list { margin-top: 20px; }
+    .lesson-list h3 { margin-bottom: 5px; }
+    .lesson-list li { margin: 5px 0; background: #f9f9f9; padding: 8px; border-radius: 5px; }
+    .lesson-list .actions { margin-top: 5px; }
+    .lesson-list button { margin-right: 5px; padding: 5px 8px; font-size: 12px; border: none; border-radius: 3px; cursor: pointer; }
+    .edit-btn { background: #2196f3; color: white; }
+    .delete-btn { background: #e74c3c; color: white; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>História do Acre - Quiz</h1>
+  </header>
+  <main>
+    <div class="tabs">
+      <button id="tab-quiz" class="active">Quiz</button>
+      <button id="tab-editor">Editar Perguntas</button>
+    </div>
+
+    <!-- Seção Quiz -->
+    <section id="quiz-section" class="section active">
+      <div class="quiz-container">
+        <h2 id="lesson-title">Selecione uma aula</h2>
+        <select id="lesson-select"></select>
+        <div id="quiz"></div>
+        <button class="next-btn" id="next-btn">Próxima Pergunta</button>
+      </div>
+    </section>
+
+    <!-- Seção Editor -->
+    <section id="editor-section" class="section">
+      <div class="editor">
+        <h2 id="form-title">Adicionar Pergunta</h2>
+        <label>Aula:</label>
+        <input type="text" id="lesson-input" placeholder="Ex: Aula 1">
+        
+        <label>Pergunta:</label>
+        <textarea id="question-input"></textarea>
+        
+        <label>Opções (separe por vírgula):</label>
+        <input type="text" id="options-input" placeholder="Opção A, Opção B, Opção C">
+        
+        <label>Resposta correta:</label>
+        <input type="text" id="answer-input">
+        
+        <button id="add-btn">Adicionar Pergunta</button>
+
+        <div class="lesson-list">
+          <h3>Aulas já criadas:</h3>
+          <div id="lesson-list"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ===== Armazenamento =====
+    function loadLessons() { return JSON.parse(localStorage.getItem("lessons")) || {}; }
+    function saveLessons(data) { localStorage.setItem("lessons", JSON.stringify(data)); }
+
+    let lessons = loadLessons();
+    let currentLesson = null;
+    let currentQuestionIndex = 0;
+    let editing = null; // {lesson, index} quando estamos editando
+
+    const quizEl = document.getElementById("quiz");
+    const nextBtn = document.getElementById("next-btn");
+    const lessonTitleEl = document.getElementById("lesson-title");
+    const lessonSelectEl = document.getElementById("lesson-select");
+    const lessonListEl = document.getElementById("lesson-list");
+    const addBtn = document.getElementById("add-btn");
+    const formTitle = document.getElementById("form-title");
+
+    // ===== Renderizar lista de aulas =====
+    function renderLessonOptions() {
+      lessonSelectEl.innerHTML = "<option value=''>-- Escolha uma aula --</option>";
+      Object.keys(lessons).forEach(lesson => {
+        const opt = document.createElement("option");
+        opt.value = lesson;
+        opt.textContent = lesson;
+        lessonSelectEl.appendChild(opt);
+      });
+
+      lessonListEl.innerHTML = "";
+      Object.keys(lessons).forEach(lesson => {
+        const div = document.createElement("div");
+        div.innerHTML = `<h4>${lesson}</h4>`;
+        const ul = document.createElement("ul");
+        lessons[lesson].forEach((q, i) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <strong>${i+1}. ${q.question}</strong><br>
+            <small>Resposta: ${q.answer}</small>
+            <div class="actions">
+              <button class="edit-btn">Editar</button>
+              <button class="delete-btn">Deletar</button>
+            </div>
+          `;
+          // Editar
+          li.querySelector(".edit-btn").addEventListener("click", () => {
+            document.getElementById("lesson-input").value = lesson;
+            document.getElementById("question-input").value = q.question;
+            document.getElementById("options-input").value = q.options.join(", ");
+            document.getElementById("answer-input").value = q.answer;
+            editing = { lesson, index: i };
+            formTitle.textContent = "Editar Pergunta";
+            addBtn.textContent = "Salvar Alterações";
+          });
+          // Deletar
+          li.querySelector(".delete-btn").addEventListener("click", () => {
+            if (confirm("Deseja realmente deletar esta pergunta?")) {
+              lessons[lesson].splice(i, 1);
+              if (lessons[lesson].length === 0) delete lessons[lesson];
+              saveLessons(lessons);
+              renderLessonOptions();
+            }
+          });
+          ul.appendChild(li);
+        });
+        div.appendChild(ul);
+        lessonListEl.appendChild(div);
+      });
+    }
+
+    // ===== Quiz =====
+    function loadQuestion() {
+      const questionObj = lessons[currentLesson][currentQuestionIndex];
+      quizEl.innerHTML = `
+        <div class="question"><strong>${questionObj.question}</strong></div>
+        <div class="options">
+          ${questionObj.options.map(opt => `<button>${opt}</button>`).join("")}
+        </div>
+      `;
+      const buttons = quizEl.querySelectorAll("button");
+      buttons.forEach(btn => {
+        btn.addEventListener("click", () => selectAnswer(btn, questionObj.answer));
+      });
+    }
+
+    function selectAnswer(button, correctAnswer) {
+      const buttons = quizEl.querySelectorAll("button");
+      buttons.forEach(btn => {
+        btn.disabled = true;
+        if (btn.textContent.trim() === correctAnswer.trim()) {
+          btn.classList.add("correct");
+        } else if (btn === button) {
+          btn.classList.add("wrong");
+        }
+      });
+      nextBtn.style.display = "block";
+    }
+
+    nextBtn.addEventListener("click", () => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < lessons[currentLesson].length) {
+        loadQuestion();
+        nextBtn.style.display = "none";
+      } else {
+        quizEl.innerHTML = "<h3>Fim da aula!</h3>";
+        nextBtn.style.display = "none";
+      }
+    });
+
+    lessonSelectEl.addEventListener("change", () => {
+      currentLesson = lessonSelectEl.value;
+      if (currentLesson) {
+        currentQuestionIndex = 0;
+        lessonTitleEl.textContent = currentLesson;
+        loadQuestion();
+        nextBtn.style.display = "none";
+      } else {
+        lessonTitleEl.textContent = "Selecione uma aula";
+        quizEl.innerHTML = "";
+      }
+    });
+
+    // ===== Editor (Adicionar/Editar) =====
+    addBtn.addEventListener("click", () => {
+      const lesson = document.getElementById("lesson-input").value.trim();
+      const question = document.getElementById("question-input").value.trim();
+      const options = document.getElementById("options-input").value.split(",").map(o => o.trim());
+      const answer = document.getElementById("answer-input").value.trim();
+
+      if (!lesson || !question || options.length < 2 || !answer) {
+        alert("Preencha todos os campos corretamente!");
+        return;
+      }
+
+      if (editing) {
+        lessons[editing.lesson][editing.index] = { question, options, answer };
+        editing = null;
+        formTitle.textContent = "Adicionar Pergunta";
+        addBtn.textContent = "Adicionar Pergunta";
+      } else {
+        if (!lessons[lesson]) lessons[lesson] = [];
+        lessons[lesson].push({ question, options, answer });
+      }
+
+      saveLessons(lessons);
+      renderLessonOptions();
+
+      document.getElementById("lesson-input").value = "";
+      document.getElementById("question-input").value = "";
+      document.getElementById("options-input").value = "";
+      document.getElementById("answer-input").value = "";
+    });
+
+    // ===== Tabs =====
+    const tabQuiz = document.getElementById("tab-quiz");
+    const tabEditor = document.getElementById("tab-editor");
+    const quizSection = document.getElementById("quiz-section");
+    const editorSection = document.getElementById("editor-section");
+
+    tabQuiz.addEventListener("click", () => {
+      tabQuiz.classList.add("active");
+      tabEditor.classList.remove("active");
+      quizSection.classList.add("active");
+      editorSection.classList.remove("active");
+    });
+    tabEditor.addEventListener("click", () => {
+      tabEditor.classList.add("active");
+      tabQuiz.classList.remove("active");
+      editorSection.classList.add("active");
+      quizSection.classList.remove("active");
+    });
+
+    // ===== Inicialização =====
+    renderLessonOptions();
+
+    // ===== Registrar Service Worker =====
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js")
+        .then(() => console.log("Service Worker registrado!"))
+        .catch(err => console.log("Erro no Service Worker", err));
+    }
+  </script>
+</body>
+</html>
