@@ -2,40 +2,89 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz - História do Acre</title>
+  <title>Quiz - HistÃ³ria do Acre</title>
   <meta name="theme-color" content="#2196f3">
   <link rel="manifest" href="manifest.json">
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f0f0f0; }
-    header { background: #2196f3; color: white; padding: 15px; text-align: center; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: url("fundo.jpg") no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+      color: #222;
+    }
+    /* Overlay escuro por cima do fundo */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: -1;
+    }
+    header {
+      background: rgba(33, 150, 243, 0.9);
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
     main { max-width: 800px; margin: auto; padding: 20px; }
     .tabs { display: flex; justify-content: center; margin-bottom: 20px; }
-    .tabs button { flex: 1; padding: 10px; border: none; background: #ddd; cursor: pointer; }
+    .tabs button {
+      flex: 1; padding: 10px; border: none;
+      background: #ddd; cursor: pointer;
+    }
     .tabs button.active { background: #2196f3; color: white; }
     .section { display: none; }
     .section.active { display: block; }
-    .quiz-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+    .quiz-container, .editor {
+      background: rgba(255,255,255,0.95);
+      padding: 20px; border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
     .question { margin-bottom: 15px; }
-    .options button { display: block; margin: 5px 0; width: 100%; padding: 10px; border: none; border-radius: 5px; background: #ddd; cursor: pointer; }
+    .options button {
+      display: block; margin: 5px 0; width: 100%;
+      padding: 10px; border: none; border-radius: 5px;
+      background: #ddd; cursor: pointer;
+    }
     .options button.correct { background: #4caf50; color: white; }
     .options button.wrong { background: #e74c3c; color: white; }
-    .next-btn { display: none; margin-top: 15px; padding: 10px 20px; background: #2196f3; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    .editor { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
-    .editor input, .editor textarea { display: block; margin: 10px 0; padding: 8px; width: 100%; }
-    .editor button { margin-top: 10px; padding: 10px; border: none; border-radius: 5px; background: #4caf50; color: white; cursor: pointer; }
+    .next-btn {
+      display: none; margin-top: 15px; padding: 10px 20px;
+      background: #2196f3; color: white; border: none;
+      border-radius: 5px; cursor: pointer;
+    }
+    .editor input, .editor textarea {
+      display: block; margin: 10px 0; padding: 8px; width: 100%;
+    }
+    .editor button {
+      margin-top: 10px; padding: 10px; border: none;
+      border-radius: 5px; background: #4caf50;
+      color: white; cursor: pointer;
+    }
     .lesson-list { margin-top: 20px; }
     .lesson-list h3 { margin-bottom: 5px; }
-    .lesson-list li { margin: 5px 0; background: #f9f9f9; padding: 8px; border-radius: 5px; }
+    .lesson-list li {
+      margin: 5px 0; background: #f9f9f9;
+      padding: 8px; border-radius: 5px;
+    }
     .lesson-list .actions { margin-top: 5px; }
-    .lesson-list button { margin-right: 5px; padding: 5px 8px; font-size: 12px; border: none; border-radius: 3px; cursor: pointer; }
+    .lesson-list button {
+      margin-right: 5px; padding: 5px 8px;
+      font-size: 12px; border: none;
+      border-radius: 3px; cursor: pointer;
+    }
     .edit-btn { background: #2196f3; color: white; }
     .delete-btn { background: #e74c3c; color: white; }
   </style>
 </head>
 <body>
   <header>
-    <h1>História do Acre - Quiz</h1>
+    <h1>HistÃ³ria do Acre - Quiz</h1>
   </header>
   <main>
     <div class="tabs">
@@ -43,17 +92,17 @@
       <button id="tab-editor">Editar Perguntas</button>
     </div>
 
-    <!-- Seção Quiz -->
+    <!-- SeÃ§Ã£o Quiz -->
     <section id="quiz-section" class="section active">
       <div class="quiz-container">
         <h2 id="lesson-title">Selecione uma aula</h2>
         <select id="lesson-select"></select>
         <div id="quiz"></div>
-        <button class="next-btn" id="next-btn">Próxima Pergunta</button>
+        <button class="next-btn" id="next-btn">PrÃ³xima Pergunta</button>
       </div>
     </section>
 
-    <!-- Seção Editor -->
+    <!-- SeÃ§Ã£o Editor -->
     <section id="editor-section" class="section">
       <div class="editor">
         <h2 id="form-title">Adicionar Pergunta</h2>
@@ -63,8 +112,8 @@
         <label>Pergunta:</label>
         <textarea id="question-input"></textarea>
         
-        <label>Opções (separe por vírgula):</label>
-        <input type="text" id="options-input" placeholder="Opção A, Opção B, Opção C">
+        <label>OpÃ§Ãµes (separe por vÃ­rgula):</label>
+        <input type="text" id="options-input" placeholder="OpÃ§Ã£o A, OpÃ§Ã£o B, OpÃ§Ã£o C">
         
         <label>Resposta correta:</label>
         <input type="text" id="answer-input">
@@ -72,7 +121,7 @@
         <button id="add-btn">Adicionar Pergunta</button>
 
         <div class="lesson-list">
-          <h3>Aulas já criadas:</h3>
+          <h3>Aulas jÃ¡ criadas:</h3>
           <div id="lesson-list"></div>
         </div>
       </div>
@@ -130,7 +179,7 @@
             document.getElementById("answer-input").value = q.answer;
             editing = { lesson, index: i };
             formTitle.textContent = "Editar Pergunta";
-            addBtn.textContent = "Salvar Alterações";
+            addBtn.textContent = "Salvar AlteraÃ§Ãµes";
           });
           // Deletar
           li.querySelector(".delete-btn").addEventListener("click", () => {
@@ -250,7 +299,7 @@
       quizSection.classList.remove("active");
     });
 
-    // ===== Inicialização =====
+    // ===== InicializaÃ§Ã£o =====
     renderLessonOptions();
 
     // ===== Registrar Service Worker =====
