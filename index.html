@@ -4,6 +4,19 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ Adryanno-tdb17-patch-1
+  <title>Quiz - Historia do Acre</title>
+  <meta name="theme-color" content="#2196f3">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    dy {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url("fundo.jpg") no-repeat center center fixed;
+  background-size: cover; /* cobre a tela toda */
+    header { background: #2196f3; color: white; padding: 15px; text-align: center; }
+=======
   <title>Quiz - História do Acre</title>
   <meta name="theme-color" content="#2196f3">
   <link rel="manifest" href="manifest.json">
@@ -30,6 +43,7 @@
       padding: 15px;
       text-align: center;
     }
+main
     main { max-width: 800px; margin: auto; padding: 20px; }
     .tabs { display: flex; justify-content: center; margin-bottom: 20px; }
     .tabs button {
@@ -103,6 +117,9 @@
       <button id="open-editor">Editor (Restrito)</button>
     </div>
 
+Adryanno-tdb17-patch-1
+    <!-- Seção Quiz -->
+=======
     <!-- Login administrador -->
     <div id="admin-login" style="display:none;">
       <h3>Área restrita</h3>
@@ -111,18 +128,26 @@
     </div>
 
     <!-- Quiz -->
+main
     <section id="quiz-section" class="section active">
       <div class="quiz-container">
         <h2 id="lesson-title">Selecione uma aula</h2>
         <select id="lesson-select"></select>
         <div id="quiz"></div>
         <button class="next-btn" id="next-btn">Próxima Pergunta</button>
+Adryanno-tdb17-patch-1
+      </div>
+    </section>
+
+    <!-- Seção Editor -->
+=======
         <button id="show-scores">Ver Placar</button>
         <div id="scoreboard"></div>
       </div>
     </section>
 
     <!-- Editor (restrito) -->
+ main
     <section id="editor-section" class="section">
       <div class="editor">
         <h2 id="form-title">Adicionar Pergunta</h2>
@@ -130,8 +155,15 @@
         <input type="text" id="lesson-input" placeholder="Ex: Aula 1">
         <label>Pergunta:</label>
         <textarea id="question-input"></textarea>
+ Adryanno-tdb17-patch-1
+        
         <label>Opções (separe por vírgula):</label>
         <input type="text" id="options-input" placeholder="Opção A, Opção B, Opção C">
+        
+=======
+        <label>Opções (separe por vírgula):</label>
+        <input type="text" id="options-input" placeholder="Opção A, Opção B, Opção C">
+main
         <label>Resposta correta:</label>
         <input type="text" id="answer-input">
         <button id="add-btn">Adicionar Pergunta</button>
@@ -354,7 +386,11 @@
       }
     });
 
+ Adryanno-tdb17-patch-1
+    // ===== Inicialização =====
+=======
     // Inicialização
+main
     renderLessonOptions();
 
     if ("serviceWorker" in navigator) {
@@ -364,4 +400,5 @@
     }
   </script>
 </body>
+
 </html>
