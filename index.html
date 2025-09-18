@@ -147,7 +147,13 @@
     const ADMIN_PASSWORD = "04650465"; 
 
     // ===== Armazenamento =====
-    function loadLessons() { return JSON.parse(localStorage.getItem("lessons")) || {}; }
+    function loadLessons() {async function fetchDefaultLessons() {
+  const res = await fetch("perguntas.json");
+  return res.json();
+}
+
+let lessons = loadLessons();
+function loadLessons() { return JSON.parse(localStorage.getItem("lessons")) || {}; }
 function saveLessons(data) { localStorage.setItem("lessons", JSON.stringify(data)); }
 
 let lessons = loadLessons();
@@ -169,6 +175,11 @@ async function initLessons() {
 }
 
 initLessons();
+} else {
+  renderLessonOptions();
+}
+    function saveLessons(data) { localStorage.setItem("lessons", JSON.stringify(data)); }
+
     let lessons = loadLessons();
     let currentLesson = null;
     let currentQuestionIndex = 0;
@@ -336,23 +347,14 @@ initLessons();
 
     // ===== Placar =====
     document.getElementById("show-scores").addEventListener("click", () => {
-  let html = "<h3>Placar</h3><ul>";
-
-  // ordenar jogadores
-  const ranking = Object.entries(scores).sort((a, b) => {
-    const [pa, sa] = a;
-    const [pb, sb] = b;
-    if (sb.acertos !== sa.acertos) return sb.acertos - sa.acertos;
-    return sa.erros - sb.erros;
-  });
-
-  ranking.forEach(([player, {acertos, erros}]) => {
-    html += `<li><strong>${player}</strong> - ✅ ${acertos} | ❌ ${erros}</li>`;
-  });
-
-  html += "</ul>";
-  document.getElementById("scoreboard").innerHTML = html;
-});
+      let html = "<h3>Placar</h3><ul>";
+      Object.keys(scores).forEach(player => {
+        const { acertos, erros } = scores[player];
+        html += `<li><strong>${player}</strong> - ✅ ${acertos} | ❌ ${erros}</li>`;
+      });
+      html += "</ul>";
+      document.getElementById("scoreboard").innerHTML = html;
+    });
 
     // ===== Tabs / Admin =====
     const tabQuiz = document.getElementById("tab-quiz");
@@ -392,6 +394,4 @@ initLessons();
     }
   </script>
 </body>
-
 </html>
-
