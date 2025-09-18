@@ -1,0 +1,54 @@
+{
+  "O Cotidiano do Seringueiro": [
+    {
+      "question": " Onde se localiza o estado do Acre, importante área dos seringais",
+      "options": ["No litoral nordestino,próximo ao oceano Atlântico", "No centro-oeste ao lado do Mato Grosso do Sul", "No extremo oeste na fronteira com Bolívia e Peru", "No sul do Brasil entre Paraná e Santa Catarina"],
+      "answer": "No extremo oeste na fronteira com Bolívia e Peru"
+    },
+    {
+      "question": "Qual foi a principal razão do crescimento da demanda por borracha no final do século XIX?",
+      "options": ["Produção de móveis de madeira nobre", "Indústria de pneus e produtos fabris", "Exportação de castanha-do-pará", "Produção de roupas de algodão"],
+      "answer": "Indústria de pneus e produtos fabris"
+    },
+    {
+      "question": "Como era chamada a região onde cada família seringueira vivia e trabalhava?",
+      "options": ["Fazenda", "Colocação", "Senzala","Vila urbana"],
+      "answer": "Colocação"
+    },
+{
+      "question": "O que eram as estradas de seringa?",
+      "options": ["Rodovias abertas pelo governo no Acre", "Trilhas na floresta que conectavam Manaus a Belém", "Caminhos circulares na mata percorridos pelos seringueiros em seu trabalho", "Ferrovias usadas para transportar borracha"],
+      "answer": "Caminhos circulares na mata percorridos pelos seringueiros em seu trabalho"
+    },
+{
+      "question": "Qual ferramenta o seringueiro utilizava para realizar a sangria da seringueira?",
+      "options": ["Foice grande de corte reto", "Machado de cabo curto", "Faca de lâmina curva", 	"Lança de ferro pontiaguda"],
+      "answer": "Faca de lâmina curva"
+    },
+{
+      "question": "Como se realizava a defumação do látex?",
+      "options": [" Aquecendo em fornos a gás e moldando com cilindros metálicos", "Expondo o látex em fogueiras com madeiras resinosas sobre moldes", "Fermentando o líquido em barris de barro enterrados", "Secando ao sol em placas abertas no chão"],
+      "answer": "Expondo o látex em fogueiras com madeiras resinosas sobre moldes"
+    },
+{
+      "question": "O que foi o sistema de aviamento?",
+      "options": ["Rede de estradas oficiais do governo", "Modelo de crédito baseado em troca de mercadorias gerando dívidas para o trabalhador", "Conjunto de técnicas tradicionais de sangria da seringueira", "Programa de ensino para crianças dos seringueiros"],
+      "answer": "Modelo de crédito baseado em troca de mercadorias gerando dívidas para o trabalhador"
+    },
+{
+      "question": "Quem eram os Soldados da Borracha?",
+      "options": ["Militares que protegiam seringais da invasão estrangeira", "Trabalhadores recrutados durante a Segunda Guerra Mundial para aumentar a produção", "Guardiões florestais indígenas contratados pelo governo", "Comerciantes que transportavam a borracha até Manaus"],
+      "answer": "Trabalhadores recrutados durante a Segunda Guerra Mundial para aumentar a produção"
+    },
+{
+      "question": "Qual era uma consequência negativa do sistema de aviamento para os seringueiros?",
+      "options": ["Ampla liberdade de venda da borracha no mercado internacional", "Dívidas que se acumulavam e prendiam os trabalhadores ao seringal", "Pagamento justo e transparente pelas bolas de borracha", "Acesso facilitado a bancos e empréstimos urbanos"],
+      "answer": "Dívidas que se acumulavam e prendiam os trabalhadores ao seringal"
+    },
+{
+      "question": "Qual dos fatores abaixo fazia parte das dificuldades cotidianas nos seringais?",
+      "options": ["Abundância de médicos e remédios baratos", "Comunicação rápida e transporte eficiente por rodovias", "Doenças tropicais e isolamento geográfico", "Educação escolar obrigatória para todas as crianças"],
+      "answer": "Doenças tropicais e isolamento geográfico"
+    }
+  ]
+}
