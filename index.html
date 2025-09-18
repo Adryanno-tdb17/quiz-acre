@@ -336,14 +336,23 @@ initLessons();
 
     // ===== Placar =====
     document.getElementById("show-scores").addEventListener("click", () => {
-      let html = "<h3>Placar</h3><ul>";
-      Object.keys(scores).forEach(player => {
-        const { acertos, erros } = scores[player];
-        html += `<li><strong>${player}</strong> - ✅ ${acertos} | ❌ ${erros}</li>`;
-      });
-      html += "</ul>";
-      document.getElementById("scoreboard").innerHTML = html;
-    });
+  let html = "<h3>Placar</h3><ul>";
+
+  // ordenar jogadores
+  const ranking = Object.entries(scores).sort((a, b) => {
+    const [pa, sa] = a;
+    const [pb, sb] = b;
+    if (sb.acertos !== sa.acertos) return sb.acertos - sa.acertos;
+    return sa.erros - sb.erros;
+  });
+
+  ranking.forEach(([player, {acertos, erros}]) => {
+    html += `<li><strong>${player}</strong> - ✅ ${acertos} | ❌ ${erros}</li>`;
+  });
+
+  html += "</ul>";
+  document.getElementById("scoreboard").innerHTML = html;
+});
 
     // ===== Tabs / Admin =====
     const tabQuiz = document.getElementById("tab-quiz");
@@ -385,3 +394,4 @@ initLessons();
 </body>
 
 </html>
+
