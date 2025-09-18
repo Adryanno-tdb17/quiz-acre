@@ -148,8 +148,27 @@
 
     // ===== Armazenamento =====
     function loadLessons() { return JSON.parse(localStorage.getItem("lessons")) || {}; }
-    function saveLessons(data) { localStorage.setItem("lessons", JSON.stringify(data)); }
+function saveLessons(data) { localStorage.setItem("lessons", JSON.stringify(data)); }
 
+let lessons = loadLessons();
+
+// Se não houver perguntas no localStorage, buscar no JSON do GitHub
+async function initLessons() {
+  if (Object.keys(lessons).length === 0) {
+    try {
+      const res = await fetch("perguntas.json");
+      if (!res.ok) throw new Error("Erro ao carregar perguntas.json");
+      const data = await res.json();
+      lessons = data;
+      saveLessons(lessons);
+    } catch (err) {
+      console.error("Erro carregando perguntas da nuvem:", err);
+    }
+  }
+  renderLessonOptions();
+}
+
+initLessons();
     let lessons = loadLessons();
     let currentLesson = null;
     let currentQuestionIndex = 0;
@@ -364,4 +383,5 @@
     }
   </script>
 </body>
+
 </html>
