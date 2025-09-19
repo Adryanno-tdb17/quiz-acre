@@ -1,54 +1,54 @@
 {
   "O Cotidiano do Seringueiro": [
     {
-      "question": " Onde se localiza o estado do Acre, importante ·rea dos seringais",
-      "options": ["No litoral nordestino,prÛximo ao oceano Atl‚ntico", "No centro-oeste ao lado do Mato Grosso do Sul", "No extremo oeste na fronteira com BolÌvia e Peru", "No sul do Brasil entre Paran· e Santa Catarina"],
-      "answer": "No extremo oeste na fronteira com BolÌvia e Peru"
+      "question": " Onde se localiza o estado do Acre, importante √°rea dos seringais",
+      "options": ["No litoral nordestino,pr√≥ximo ao oceano Atl√¢ntico", "No centro-oeste ao lado do Mato Grosso do Sul", "No extremo oeste na fronteira com Bol√≠via e Peru", "No sul do Brasil entre Paran√° e Santa Catarina"],
+      "answer": "No extremo oeste na fronteira com Bol√≠via e Peru"
     },
     {
-      "question": "Qual foi a principal raz„o do crescimento da demanda por borracha no final do sÈculo XIX?",
-      "options": ["ProduÁ„o de mÛveis de madeira nobre", "Ind˙stria de pneus e produtos fabris", "ExportaÁ„o de castanha-do-par·", "ProduÁ„o de roupas de algod„o"],
-      "answer": "Ind˙stria de pneus e produtos fabris"
+      "question": "Qual foi a principal raz√£o do crescimento da demanda por borracha no final do s√©culo XIX?",
+      "options": ["Produ√ß√£o de m√≥veis de madeira nobre", "Ind√∫stria de pneus e produtos fabris", "Exporta√ß√£o de castanha-do-par√°", "Produ√ß√£o de roupas de algod√£o"],
+      "answer": "Ind√∫stria de pneus e produtos fabris"
     },
     {
-      "question": "Como era chamada a regi„o onde cada famÌlia seringueira vivia e trabalhava?",
-      "options": ["Fazenda", "ColocaÁ„o", "Senzala","Vila urbana"],
-      "answer": "ColocaÁ„o"
+      "question": "Como era chamada a regi√£o onde cada fam√≠lia seringueira vivia e trabalhava?",
+      "options": ["Fazenda", "Coloca√ß√£o", "Senzala","Vila urbana"],
+      "answer": "Coloca√ß√£o"
     },
 {
       "question": "O que eram as estradas de seringa?",
-      "options": ["Rodovias abertas pelo governo no Acre", "Trilhas na floresta que conectavam Manaus a BelÈm", "Caminhos circulares na mata percorridos pelos seringueiros em seu trabalho", "Ferrovias usadas para transportar borracha"],
+      "options": ["Rodovias abertas pelo governo no Acre", "Trilhas na floresta que conectavam Manaus a Bel√©m", "Caminhos circulares na mata percorridos pelos seringueiros em seu trabalho", "Ferrovias usadas para transportar borracha"],
       "answer": "Caminhos circulares na mata percorridos pelos seringueiros em seu trabalho"
     },
 {
       "question": "Qual ferramenta o seringueiro utilizava para realizar a sangria da seringueira?",
-      "options": ["Foice grande de corte reto", "Machado de cabo curto", "Faca de l‚mina curva", 	"LanÁa de ferro pontiaguda"],
-      "answer": "Faca de l‚mina curva"
+      "options": ["Foice grande de corte reto", "Machado de cabo curto", "Faca de l√¢mina curva", 	"Lan√ßa de ferro pontiaguda"],
+      "answer": "Faca de l√¢mina curva"
     },
 {
-      "question": "Como se realizava a defumaÁ„o do l·tex?",
-      "options": [" Aquecendo em fornos a g·s e moldando com cilindros met·licos", "Expondo o l·tex em fogueiras com madeiras resinosas sobre moldes", "Fermentando o lÌquido em barris de barro enterrados", "Secando ao sol em placas abertas no ch„o"],
-      "answer": "Expondo o l·tex em fogueiras com madeiras resinosas sobre moldes"
+      "question": "Como se realizava a defuma√ß√£o do l√°tex?",
+      "options": [" Aquecendo em fornos a g√°s e moldando com cilindros met√°licos", "Expondo o l√°tex em fogueiras com madeiras resinosas sobre moldes", "Fermentando o l√≠quido em barris de barro enterrados", "Secando ao sol em placas abertas no ch√£o"],
+      "answer": "Expondo o l√°tex em fogueiras com madeiras resinosas sobre moldes"
     },
 {
       "question": "O que foi o sistema de aviamento?",
-      "options": ["Rede de estradas oficiais do governo", "Modelo de crÈdito baseado em troca de mercadorias gerando dÌvidas para o trabalhador", "Conjunto de tÈcnicas tradicionais de sangria da seringueira", "Programa de ensino para crianÁas dos seringueiros"],
-      "answer": "Modelo de crÈdito baseado em troca de mercadorias gerando dÌvidas para o trabalhador"
+      "options": ["Rede de estradas oficiais do governo", "Modelo de cr√©dito baseado em troca de mercadorias gerando d√≠vidas para o trabalhador", "Conjunto de t√©cnicas tradicionais de sangria da seringueira", "Programa de ensino para crian√ßas dos seringueiros"],
+      "answer": "Modelo de cr√©dito baseado em troca de mercadorias gerando d√≠vidas para o trabalhador"
     },
 {
       "question": "Quem eram os Soldados da Borracha?",
-      "options": ["Militares que protegiam seringais da invas„o estrangeira", "Trabalhadores recrutados durante a Segunda Guerra Mundial para aumentar a produÁ„o", "Guardiıes florestais indÌgenas contratados pelo governo", "Comerciantes que transportavam a borracha atÈ Manaus"],
-      "answer": "Trabalhadores recrutados durante a Segunda Guerra Mundial para aumentar a produÁ„o"
+      "options": ["Militares que protegiam seringais da invas√£o estrangeira", "Trabalhadores recrutados durante a Segunda Guerra Mundial para aumentar a produ√ß√£o", "Guardi√µes florestais ind√≠genas contratados pelo governo", "Comerciantes que transportavam a borracha at√© Manaus"],
+      "answer": "Trabalhadores recrutados durante a Segunda Guerra Mundial para aumentar a produ√ß√£o"
     },
 {
-      "question": "Qual era uma consequÍncia negativa do sistema de aviamento para os seringueiros?",
-      "options": ["Ampla liberdade de venda da borracha no mercado internacional", "DÌvidas que se acumulavam e prendiam os trabalhadores ao seringal", "Pagamento justo e transparente pelas bolas de borracha", "Acesso facilitado a bancos e emprÈstimos urbanos"],
-      "answer": "DÌvidas que se acumulavam e prendiam os trabalhadores ao seringal"
+      "question": "Qual era uma consequ√™ncia negativa do sistema de aviamento para os seringueiros?",
+      "options": ["Ampla liberdade de venda da borracha no mercado internacional", "D√≠vidas que se acumulavam e prendiam os trabalhadores ao seringal", "Pagamento justo e transparente pelas bolas de borracha", "Acesso facilitado a bancos e empr√©stimos urbanos"],
+      "answer": "D√≠vidas que se acumulavam e prendiam os trabalhadores ao seringal"
     },
 {
       "question": "Qual dos fatores abaixo fazia parte das dificuldades cotidianas nos seringais?",
-      "options": ["Abund‚ncia de mÈdicos e remÈdios baratos", "ComunicaÁ„o r·pida e transporte eficiente por rodovias", "DoenÁas tropicais e isolamento geogr·fico", "EducaÁ„o escolar obrigatÛria para todas as crianÁas"],
-      "answer": "DoenÁas tropicais e isolamento geogr·fico"
+      "options": ["Abund√¢ncia de m√©dicos e rem√©dios baratos", "Comunica√ß√£o r√°pida e transporte eficiente por rodovias", "Doen√ßas tropicais e isolamento geogr√°fico", "Educa√ß√£o escolar obrigat√≥ria para todas as crian√ßas"],
+      "answer": "Doen√ßas tropicais e isolamento geogr√°fico"
     }
   ]
 }
