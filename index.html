@@ -14,18 +14,18 @@
       background: url("fundo.jpg") no-repeat center center fixed;
       background-size: cover;
       position: relative;
-      color: #222;
+      color: #023805;
     }
     body::before {
       content: "";
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0,0,0,0.4);
+      background: #fffff;
       z-index: -1;
     }
     header {
-      background: #01310ce6;
+      background: #023805;
       color: white;
       padding: 15px;
       text-align: center;
@@ -34,27 +34,27 @@
     .tabs { display: flex; justify-content: center; margin-bottom: 20px; }
     .tabs button {
       flex: 1; padding: 10px; border: none;
-      background: #8adf80f2; cursor: pointer;
+      background: #ddd; cursor: pointer;
     }
-    .tabs button.active { background: #01310ce6; color: #8adf80f2; }
+    .tabs button.active { background: #023805; color: white; }
     .section { display: none; }
     .section.active { display: block; }
     .quiz-container, .editor {
-      background: #8adf8af2;
+      background: rgba(255,255,255,0.95);
       padding: 20px; border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 6px #023805;
     }
     .question { margin-bottom: 15px; }
     .options button {
       display: block; margin: 5px 0; width: 100%;
       padding: 10px; border: none; border-radius: 5px;
-      background: #8adf80f2; cursor: pointer;
+      background: #ddd; cursor: pointer;
     }
     .options button.correct { background: #4caf50; color: white; }
     .options button.wrong { background: #e74c3c; color: white; }
     .next-btn {
       display: none; margin-top: 15px; padding: 10px 20px;
-      background: #01310ce6; color: white; border: none;
+      background: #023805; color: white; border: none;
       border-radius: 5px; cursor: pointer;
     }
     .editor input, .editor textarea {
@@ -62,27 +62,26 @@
     }
     .editor button {
       margin-top: 10px; padding: 10px; border: none;
-      border-radius: 5px; background: #01310ce6;
+      border-radius: 5px; background: #4caf50;
       color: white; cursor: pointer;
     }
     .lesson-list { margin-top: 20px; }
     .lesson-list li {
-      margin: 5px 0; background: #8adf80f2;
+      margin: 5px 0; background: #f9f9f9;
       padding: 8px; border-radius: 5px;
     }
     .lesson-list button {
       margin-right: 5px; padding: 5px 8px; font-size: 12px;
       border: none; border-radius: 3px; cursor: pointer;
     }
-    .edit-btn { background: #01310ce6; color: white; }
+    .edit-btn { background: #023805; color: white; }
     .delete-btn { background: #e74c3c; color: white; }
-    /* Login */
     #player-login, #admin-login {
-      background: #baf5adf2;
+      background: rgba(255,255,255,0.95);
       padding: 20px; border-radius: 8px;
       margin-bottom: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
-    #scoreboard { margin-top: 20px; background: #baf5adf2; padding: 15px; border-radius: 8px; }
+    #scoreboard { margin-top: 20px; background: #19ec27; padding: 15px; border-radius: 8px; }
   </style>
 </head>
 <body>
@@ -122,7 +121,7 @@
       </div>
     </section>
 
-    <!-- Editor (restrito) -->
+    <!-- Editor -->
     <section id="editor-section" class="section">
       <div class="editor">
         <h2 id="form-title">Adicionar Pergunta</h2>
@@ -135,6 +134,7 @@
         <label>Resposta correta:</label>
         <input type="text" id="answer-input">
         <button id="add-btn">Adicionar Pergunta</button>
+        <button id="reload-questions" style="background:#00ff08;margin-left:5px;">🔄 Recarregar da nuvem</button>
         <div class="lesson-list">
           <h3>Aulas já criadas:</h3>
           <div id="lesson-list"></div>
@@ -144,46 +144,15 @@
   </main>
 
   <script>
-    const ADMIN_PASSWORD = "04650465"; 
+    const ADMIN_PASSWORD = "04650465";
 
-    // ===== Armazenamento =====
-    function loadLessons() {async function fetchDefaultLessons() {
-  const res = await fetch("perguntas.json");
-  return res.json();
-}
-
-let lessons = loadLessons();
-function loadLessons() { return JSON.parse(localStorage.getItem("lessons")) || {}; }
-function saveLessons(data) { localStorage.setItem("lessons", JSON.stringify(data)); }
-
-let lessons = loadLessons();
-
-// Se não houver perguntas no localStorage, buscar no JSON do GitHub
-async function initLessons() {
-  if (Object.keys(lessons).length === 0) {
-    try {
-      const res = await fetch("perguntas.json");
-      if (!res.ok) throw new Error("Erro ao carregar perguntas.json");
-      const data = await res.json();
-      lessons = data;
-      saveLessons(lessons);
-    } catch (err) {
-      console.error("Erro carregando perguntas da nuvem:", err);
-    }
-  }
-  renderLessonOptions();
-}
-
-initLessons();
-} else {
-  renderLessonOptions();
-}
+    function loadLessons() { return JSON.parse(localStorage.getItem("lessons")) || {}; }
     function saveLessons(data) { localStorage.setItem("lessons", JSON.stringify(data)); }
 
     let lessons = loadLessons();
     let currentLesson = null;
     let currentQuestionIndex = 0;
-    let editing = null; 
+    let editing = null;
     let currentPlayer = null;
     let scores = JSON.parse(localStorage.getItem("scores")) || {};
 
@@ -195,7 +164,31 @@ initLessons();
     const addBtn = document.getElementById("add-btn");
     const formTitle = document.getElementById("form-title");
 
-    // ===== Renderizar lista de aulas =====
+    // === Carregar perguntas da nuvem
+    async function fetchFromCloud() {
+      try {
+        const res = await fetch("perguntas.json");
+        if (!res.ok) throw new Error("Erro ao carregar perguntas.json");
+        const data = await res.json();
+        lessons = data;
+        saveLessons(lessons);
+        renderLessonOptions();
+        alert("Perguntas recarregadas da nuvem!");
+      } catch (err) {
+        console.error(err);
+        alert("Erro ao buscar perguntas da nuvem.");
+      }
+    }
+
+    async function initLessons() {
+      if (Object.keys(lessons).length === 0) {
+        await fetchFromCloud();
+      } else {
+        renderLessonOptions();
+      }
+    }
+
+    // === Render
     function renderLessonOptions() {
       lessonSelectEl.innerHTML = "<option value=''>-- Escolha uma aula --</option>";
       Object.keys(lessons).forEach(lesson => {
@@ -204,7 +197,6 @@ initLessons();
         opt.textContent = lesson;
         lessonSelectEl.appendChild(opt);
       });
-
       lessonListEl.innerHTML = "";
       Object.keys(lessons).forEach(lesson => {
         const div = document.createElement("div");
@@ -244,7 +236,7 @@ initLessons();
       });
     }
 
-    // ===== Quiz =====
+    // === Quiz
     function loadQuestion() {
       const questionObj = lessons[currentLesson][currentQuestionIndex];
       quizEl.innerHTML = `
@@ -268,7 +260,6 @@ initLessons();
           btn.classList.add("wrong");
         }
       });
-
       if (currentPlayer) {
         if (button.textContent.trim() === correctAnswer.trim()) {
           scores[currentPlayer].acertos++;
@@ -304,18 +295,16 @@ initLessons();
       }
     });
 
-    // ===== Editor (adicionar/editar) =====
+    // === Admin adicionar
     addBtn.addEventListener("click", () => {
       const lesson = document.getElementById("lesson-input").value.trim();
       const question = document.getElementById("question-input").value.trim();
       const options = document.getElementById("options-input").value.split(",").map(o => o.trim());
       const answer = document.getElementById("answer-input").value.trim();
-
       if (!lesson || !question || options.length < 2 || !answer) {
         alert("Preencha todos os campos corretamente!");
         return;
       }
-
       if (editing) {
         lessons[editing.lesson][editing.index] = { question, options, answer };
         editing = null;
@@ -325,17 +314,22 @@ initLessons();
         if (!lessons[lesson]) lessons[lesson] = [];
         lessons[lesson].push({ question, options, answer });
       }
-
       saveLessons(lessons);
       renderLessonOptions();
-
       document.getElementById("lesson-input").value = "";
       document.getElementById("question-input").value = "";
       document.getElementById("options-input").value = "";
       document.getElementById("answer-input").value = "";
     });
 
-    // ===== Login do jogador =====
+    // === Recarregar da nuvem (admin)
+    document.getElementById("reload-questions").addEventListener("click", () => {
+      if (confirm("Isso vai sobrescrever todas as perguntas locais. Continuar?")) {
+        fetchFromCloud();
+      }
+    });
+
+    // === Login jogador
     document.getElementById("start-quiz").addEventListener("click", () => {
       const name = document.getElementById("player-name").value.trim();
       if (!name) return alert("Digite seu nome!");
@@ -345,27 +339,21 @@ initLessons();
       document.getElementById("player-login").style.display = "none";
     });
 
-    // ===== Placar =====
+    // === Ranking
     document.getElementById("show-scores").addEventListener("click", () => {
-  let html = "<h3>Placar</h3><ul>";
+      let html = "<h3>Placar</h3><ul>";
+      const ranking = Object.entries(scores).sort((a, b) => {
+        if (b[1].acertos !== a[1].acertos) return b[1].acertos - a[1].acertos;
+        return a[1].erros - b[1].erros;
+      });
+      ranking.forEach(([player, {acertos, erros}]) => {
+        html += `<li><strong>${player}</strong> - ✅ ${acertos} | ❌ ${erros}</li>`;
+      });
+      html += "</ul>";
+      document.getElementById("scoreboard").innerHTML = html;
+    });
 
-  // ordenar jogadores
-  const ranking = Object.entries(scores).sort((a, b) => {
-    const [pa, sa] = a;
-    const [pb, sb] = b;
-    if (sb.acertos !== sa.acertos) return sb.acertos - sa.acertos;
-    return sa.erros - sb.erros;
-  });
-
-  ranking.forEach(([player, {acertos, erros}]) => {
-    html += `<li><strong>${player}</strong> - ✅ ${acertos} | ❌ ${erros}</li>`;
-  });
-
-  html += "</ul>";
-  document.getElementById("scoreboard").innerHTML = html;
-});
-
-    // ===== Tabs / Admin =====
+    // === Tabs
     const tabQuiz = document.getElementById("tab-quiz");
     const openEditor = document.getElementById("open-editor");
     const quizSection = document.getElementById("quiz-section");
@@ -376,11 +364,9 @@ initLessons();
       editorSection.classList.remove("active");
       quizSection.classList.add("active");
     });
-
     openEditor.addEventListener("click", () => {
       document.getElementById("admin-login").style.display = "block";
     });
-
     document.getElementById("check-pass").addEventListener("click", () => {
       const pass = document.getElementById("admin-pass").value;
       if (pass === ADMIN_PASSWORD) {
@@ -394,7 +380,7 @@ initLessons();
     });
 
     // Inicialização
-    renderLessonOptions();
+    initLessons();
 
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("service-worker.js")

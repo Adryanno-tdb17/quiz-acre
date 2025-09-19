@@ -1,4 +1,4 @@
-const CACHE_NAME = "quiz-acre-v2";
+const CACHE_NAME = "quiz-acre-v3";
 const urlsToCache = [
   "/",
   "/index.html",
@@ -25,7 +25,6 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   event.respondWith(
-    caches.match(event.request).then(response => response || fetch(event.request))
+    caches.match(event.request).then(resp => resp || fetch(event.request))
   );
-
 });
