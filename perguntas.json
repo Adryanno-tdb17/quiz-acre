@@ -1,7 +1,7 @@
 {
   "O Cotidiano do Seringueiro": [
     {
-      "question": " Onde se localiza o estado do Acre, importante área dos seringais",
+      "question": "Onde se localiza o estado do Acre, importante área dos seringais",
       "options": ["No litoral nordestino,próximo ao oceano Atlântico", "No centro-oeste ao lado do Mato Grosso do Sul", "No extremo oeste na fronteira com Bolívia e Peru", "No sul do Brasil entre Paraná e Santa Catarina"],
       "answer": "No extremo oeste na fronteira com Bolívia e Peru"
     },
@@ -51,4 +51,5 @@
       "answer": "Doenças tropicais e isolamento geográfico"
     }
   ]
+
 }
